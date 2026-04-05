@@ -2,18 +2,40 @@ import { Component } from '@angular/core';
 import { HousingData } from '../../core/services/housing-data';
 import { Housing } from '../../core/models/housing';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './details.html',
   styleUrl: './details.scss',
 })
 export class Details {
 
+  // Create a blank application form
+  applyForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    email: new FormControl(''),
+  });
+
+  /**
+   * When form is submitted
+   */
+  onSubmit() {
+    this.housingData.submitApplication(
+      this.applyForm.value.firstName ?? '',
+      this.applyForm.value.lastName ?? '',
+      this.applyForm.value.email ?? '',
+    );
+
+  }
+
   housing: Housing | undefined;
 
-  // Inject Housing Service and fetch Housing by ID
+  /**
+   * Constructor: Inject Housing Service and fetch Housing by ID
+   */
   constructor(private housingData: HousingData, private route: ActivatedRoute) {}
   ngOnInit() {
     const housingId = Number(this.route.snapshot.params['id']);

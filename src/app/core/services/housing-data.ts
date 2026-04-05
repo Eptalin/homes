@@ -130,4 +130,8 @@ export class HousingData {
     return this.housingList.find(housing => housing.id === id);
   }
 
+  submitApplication(firstName: string, lastName: string, email: string) {
+    console.log(`Application submitted by ${firstName} ${lastName} (${email}).`)
+  }
+
 }

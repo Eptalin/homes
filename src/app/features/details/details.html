@@ -1,9 +1,12 @@
 <article>
-    <img [src]="housing?.photo">
+
+    <img [src]="housing?.photo" class="listing-photo">
+
     <section class="listing-description">
         <h2 class="listing-heading">{{ housing?.name }}</h2>
         <p class="listing-location">{{ housing?.city }}, {{ housing?.state }}</p>
     </section>
+
     <section class="listing-features">
         <h2 class="section-heading">About this Housing</h2>
         <ul>
@@ -12,8 +15,18 @@
             <li>Does this location have a laundry: {{ housing?.laundry }}</li>
         </ul>
     </section>
+
     <section class="listing-apply">
         <h2 class="section-heading">Apply now to live here!</h2>
-        <button class="primary">Apply now</button>
+        <form [formGroup]="applyForm" (submit)="onSubmit()">
+            <label for="first-name">First name</label>
+            <input type="text" id="first-name" formControlName="firstName">
+            <label for="last-name">Last name</label>
+            <input type="text" id="last-name" formControlName="lastName">
+            <label for="email">Email</label>
+            <input type="text" id="email" formControlName="email">
+            <button class="primary" type="submit">Apply now</button>
+        </form>
     </section>
+
 </article>

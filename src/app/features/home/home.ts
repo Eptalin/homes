@@ -14,16 +14,30 @@ export class Home {
   
   // Initialise empty array of Housing
   housingList: Housing[] = [];
-
+  filteredHousingList: Housing[] = [];
+  
   // Inject the Housing service and fetch Housing
-  constructor(private housingData: HousingData) {}
+  housingData: HousingData = inject(HousingData);
   ngOnInit() {
     this.housingList = this.housingData.getAllHousing();
+    this.filteredHousingList = this.housingList;
   }
 
-  // Alternative - Okay for synchronous stuff, but not async.
-  // Things within 'constructor() {HERE}' execute too early so may be undefined for Angular tools.
-  //    housingData: HousingData = inject(HousingData);
-  //    constructor() {this.housingList = this.housingData.getAllHousing()}
+  /**
+   * Filter results based on user input
+   * @param text User input
+   * @param event The submit event
+   */
+  filterResults(text: string, event: Event) {
+    // Prevent page from reloading on submit
+    event.preventDefault();
+
+    if (!text) {
+      this.filteredHousingList = this.housingList;
+    } 
+    this.filteredHousingList = this.housingList.filter(
+      housing => housing?.city.toLowerCase().includes(text.toLowerCase())
+    );
+  }
  
 }

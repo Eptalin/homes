@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HousingData } from '../../core/services/housing-data';
 import { Housing } from '../../core/models/housing';
 import { ActivatedRoute } from '@angular/router';
@@ -33,10 +33,9 @@ export class Details {
 
   housing: Housing | undefined;
 
-  /**
-   * Constructor: Inject Housing Service and fetch Housing by ID
-   */
-  constructor(private housingData: HousingData, private route: ActivatedRoute) {}
+  //Inject Housing Service and fetch Housing by ID
+  housingData: HousingData = inject(HousingData);
+  route: ActivatedRoute = inject(ActivatedRoute);
   ngOnInit() {
     const housingId = Number(this.route.snapshot.params['id']);
     this.housing = this.housingData.getHousingById(housingId);
